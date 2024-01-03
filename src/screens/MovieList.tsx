@@ -161,7 +161,7 @@ const MovieList = (): JSX.Element => {
   const fetchMoreData = (): void => {
     if (!loadingMoreData && !filterSelected) {
       setLoadingMoreData(true);
-      setReleaseYear(releaseYear + 1);
+      setReleaseYear(prev => prev + 1);
       setTimeout(() => {
         setLoadingMoreData(false);
       }, 1000);

@@ -28,7 +28,6 @@ const Banner = ({img, title, rating, preview, overview}: IProps) => {
         navigation.navigate('MoviePreview', {preview, title, overview})
       }>
       <ImageBackground
-        // source={{uri: `https://image.tmdb.org/t//original/${img}`}}
         source={{uri: `https://image.tmdb.org/t/p/w500/${img}`}}
         style={styles.bgImage}>
         <View style={styles.titleContainer}>
