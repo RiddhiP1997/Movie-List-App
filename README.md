@@ -22,17 +22,27 @@ cd Movie-List-App
 ```
 npm install
 ```
-- To run the project on android run below command:
+- To run the project on android run below command and you are good to go!
 
 ```
 npm run android
 ```
-- To run the project on iOS run below command:
+- To run the project on iOS, an additional step is required, run below command:
+
+```
+cd ios && pod install && cd ..
+```
+
+- Finally, run below command:
 
 ```
 npm run ios
 ```
+
 - You are all set!
+
+> If you wish to run the app using yarn, pls refer [this](https://medium.com/@julien-ctx/how-to-clone-build-and-run-a-react-native-app-from-a-github-repository-7ab781e52a14) article.
+
 
 ## Requirements
 
