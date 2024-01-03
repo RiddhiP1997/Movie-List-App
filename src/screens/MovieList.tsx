@@ -65,7 +65,7 @@ const MovieList = (): JSX.Element => {
     getGenres();
   }, []);
 
-  const getGenres = () => {
+  const getGenres = (): void => {
     axios
       .get('https://api.themoviedb.org/3/genre/movie/list', {
         params: {api_key: API_KEY},
@@ -87,7 +87,7 @@ const MovieList = (): JSX.Element => {
       });
   };
 
-  const getMovies = async () => {
+  const getMovies = async (): Promise<void> => {
     try {
       const response = await axios.get(
         'https://api.themoviedb.org/3/discover/movie',
@@ -108,7 +108,7 @@ const MovieList = (): JSX.Element => {
     }
   };
 
-  const onFilterItemPress = genreId => {
+  const onFilterItemPress = (genreId): void => {
     // scroll to top on filter selection
     flatlistRef?.current?.scrollToIndex({index: 0});
 
@@ -144,17 +144,21 @@ const MovieList = (): JSX.Element => {
       }
     }
 
-    const filteredData = filterMoviesByGenre(movies, idsOfSelectedGenres);
+    const filteredData: IMovieData[] = filterMoviesByGenre(
+      movies,
+      idsOfSelectedGenres,
+    );
+
     setFilteredResult(filteredData);
   };
 
-  const filterMoviesByGenre = (movies, genreIds) => {
+  const filterMoviesByGenre = (movies, genreIds): IMovieData[] => {
     return movies.filter(movie =>
       movie.genre_ids.some(genreId => genreIds.includes(genreId)),
     );
   };
 
-  const fetchMoreData = () => {
+  const fetchMoreData = (): void => {
     if (!loadingMoreData && !filterSelected) {
       setLoadingMoreData(true);
       setReleaseYear(releaseYear + 1);
@@ -164,7 +168,7 @@ const MovieList = (): JSX.Element => {
     }
   };
 
-  const handleSearch = text => {
+  const handleSearch = (text: string): void => {
     setSearchText(text);
     const filteredData = searchMoviesByTitle(movies, text);
     setFilteredResult(filteredData);
@@ -176,13 +180,13 @@ const MovieList = (): JSX.Element => {
     );
   };
 
-  const showEmptyText = () => (
+  const showEmptyText = (): JSX.Element => (
     <View style={styles.emptyListComponent}>
       <Text style={styles.emptyListText}>No items to show</Text>
     </View>
   );
 
-  const showFooterLoader = () => (
+  const showFooterLoader = (): JSX.Element => (
     <ActivityIndicator
       animating={loadingMoreData}
       size="large"
@@ -198,7 +202,7 @@ const MovieList = (): JSX.Element => {
     );
   };
 
-  const renderItemInner = ({item}) => {
+  const renderItemInner = ({item}): JSX.Element => {
     if (typeof item === 'string') {
       return renderSectionHeader(item);
     } else {
@@ -214,7 +218,9 @@ const MovieList = (): JSX.Element => {
     }
   };
 
-  const formatMovies = movies => {
+  const formatMovies = (
+    movies: IMovieData[],
+  ): Array<string[] | IMovieData[]> => {
     const formattedData: Array<string[] | IMovieData[]> = [];
     const moviesByYear = {};
 
@@ -255,14 +261,16 @@ const MovieList = (): JSX.Element => {
     return formattedData;
   };
 
+  const handleSearchIconPress = (): void => {
+    setShowSearchInput(!showSearchInput);
+    setSearchText('');
+  };
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.black}}>
+    <SafeAreaView style={styles.mainContainer}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.grey} />
       <Header
-        onSearchPress={() => {
-          setShowSearchInput(!showSearchInput);
-          setSearchText('');
-        }}
+        onSearchIconPress={handleSearchIconPress}
         searchSelected={showSearchInput}
       />
       {!showSearchInput ? (
@@ -270,7 +278,7 @@ const MovieList = (): JSX.Element => {
       ) : (
         <SearchInput
           handleSearch={handleSearch}
-          onClearPress={() => setSearchText('')}
+          onClearPress={(): void => setSearchText('')}
           searchText={searchText}
         />
       )}
@@ -307,6 +315,10 @@ const MovieList = (): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: COLORS.black,
+  },
   scrollContainer: {
     flex: 1,
     backgroundColor: COLORS.black,

@@ -2,7 +2,13 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import COLORS from '../styles/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const SearchInput = ({searchText, onClearPress, handleSearch}) => {
+interface IProps {
+  searchText: string;
+  onClearPress: () => void;
+  handleSearch: (text: string) => void;
+}
+
+const SearchInput = ({searchText, onClearPress, handleSearch}: IProps) => {
   return (
     <View style={styles.container}>
       <TextInput

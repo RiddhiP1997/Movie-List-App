@@ -2,7 +2,12 @@ import {View, Image, StyleSheet} from 'react-native';
 import COLORS from '../styles/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Header = ({onSearchPress, searchSelected}): JSX.Element => {
+interface IProps {
+  onSearchIconPress: () => void;
+  searchSelected: boolean;
+}
+
+const Header = ({onSearchIconPress, searchSelected}: IProps): JSX.Element => {
   return (
     <View style={styles.container}>
       <Image
@@ -12,7 +17,7 @@ const Header = ({onSearchPress, searchSelected}): JSX.Element => {
       />
       <Icon
         name="search"
-        onPress={onSearchPress}
+        onPress={onSearchIconPress}
         size={25}
         color={searchSelected ? COLORS.red : COLORS.white}
       />
